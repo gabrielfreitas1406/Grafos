@@ -1,20 +1,51 @@
-#include <iostream>
-#include <vector> 
+#include <bits/stdc++.h>
 
 using namespace std;
-int m,n,x,y,z; 
+int n, m, u, v, w;
+vector <pair<int,int>> LA[200010];
+int in_mst[200010];
 
-int main() {
-    cin >> m >> n;
-    while (m != 0 && n != 0){
-        while (n > 0){
-            cin >> x >> y >> z;
-            n --;
-            //cout << n;
+int main(){
+    while (1){
+        cin >> n >> m;
+        if (n ==0 && m == 0) break;
+
+        for(int i=0; i<n; i++){
+            LA[i].clear();
+            in_mst[i] = 0;
         }
-        cout << "saiu!\n";
-        cin >> m >> n;
-    }
+
+        int sm_a = 0;
+
+        for (int i=0; i<m; i++){
+            sm_a+=w;
+            cin >> u >> v >> w;
+            LA[u].push_back({w,v});
+            LA[v].push_back({w,u});
+        }    
     
-    return 0;
+
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> fila;
+        in_mst[0] = 1;
+        for (auto &[v, w]: LA[0]){
+            fila.push({w, v});
+        }
+
+        int c_mst = 0;
+        while (!fila.empty()){
+            auto &[v, w] = fila.top();
+            fila.pop();
+
+            if (in_mst[v] == 0){
+                in_mst[v] = 1;
+                c_mst += w;
+
+                for (auto &[w2, v2]: LA[v]){
+                    if (in_mst[v2] == 0) fila.push({w2,v2});
+                }
+            }
+            
+        }
+        cout << sm_a - c_mst << "\n";
+    }
 }
