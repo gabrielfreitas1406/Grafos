@@ -1,2 +1,2 @@
 # Grafos
-Repositório para submissão dos códigos da matéria Introdução à Teoria dos Grafos
+Repositório para submissão dos códigos da disciplina Introdução à Teoria dos Grafos
